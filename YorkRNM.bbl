@@ -1,0 +1,156 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Ando and Zhang}2005]{Ando:2005:FLP:1046920.1194905}
+Rie~Kubota Ando and Tong Zhang.
+\newblock 2005.
+\newblock A framework for learning predictive structures from multiple tasks
+  and unlabeled data.
+\newblock {\em J. Mach. Learn. Res.}, 6:1817--1853, December.
+
+\bibitem[\protect\citename{Breiman}1996]{breiman1996bagging}
+Leo Breiman.
+\newblock 1996.
+\newblock Bagging predictors.
+\newblock {\em Machine learning}, 24(2):123--140.
+
+\bibitem[\protect\citename{Caruana}1997]{Caruana:1997:ML:262868.262872}
+Rich Caruana.
+\newblock 1997.
+\newblock Multitask learning.
+\newblock {\em Mach. Learn.}, 28(1):41--75, July.
+
+\bibitem[\protect\citename{Graff and Chen}2005]{graff2005chinese}
+David Graff and Ke~Chen.
+\newblock 2005.
+\newblock Chinese gigaword.
+\newblock {\em LDC Catalog No.: LDC2003T09, ISBN}, 1:58563--58230.
+
+\bibitem[\protect\citename{Gutmann and Hyv{\"a}rinen}2010]{gutmann2010noise}
+Michael Gutmann and Aapo Hyv{\"a}rinen.
+\newblock 2010.
+\newblock Noise-contrastive estimation: A new estimation principle for
+  unnormalized statistical models.
+\newblock In {\em Proceedings of the Thirteenth International Conference on
+  Artificial Intelligence and Statistics}, pages 297--304.
+
+\bibitem[\protect\citename{Liu \bgroup et al.\egroup }2016]{kbp2016iflytek}
+Dan Liu, Wei Lin, Shiliang Zhang, Si~Wei, and Hui Jiang.
+\newblock 2016.
+\newblock The {USTC\_NELSLIP} systems for trilingual entity detection and
+  linking tasks at {TAC KBP} 2016.
+\newblock In {\em Proceedings of Text Analysis Conference (TAC2016)}.
+
+\bibitem[\protect\citename{Maurer \bgroup et al.\egroup
+  }2016]{Maurer:2016:BMR:2946645.3007034}
+Andreas Maurer, Massimiliano Pontil, and Bernardino Romera-Paredes.
+\newblock 2016.
+\newblock The benefit of multitask representation learning.
+\newblock {\em J. Mach. Learn. Res.}, 17(1):2853--2884, January.
+
+\bibitem[\protect\citename{Mendonca \bgroup et al.\egroup
+  }2009]{mendonca2009spanish}
+Angelo Mendonca, David~Andrew Graff, and Denise DiPersio.
+\newblock 2009.
+\newblock {\em Spanish gigaword second edition}.
+\newblock Linguistic Data Consortium.
+
+\bibitem[\protect\citename{Mikolov \bgroup et al.\egroup
+  }2013]{mikolov2013distributed}
+Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg~S Corrado, and Jeff Dean.
+\newblock 2013.
+\newblock Distributed representations of words and phrases and their
+  compositionality.
+\newblock In {\em Advances in neural information processing systems}, pages
+  3111--3119.
+
+\bibitem[\protect\citename{Nair and Hinton}2010]{Nair:2010:RLU:3104322.3104425}
+Vinod Nair and Geoffrey~E. Hinton.
+\newblock 2010.
+\newblock Rectified linear units improve restricted boltzmann machines.
+\newblock In {\em Proceedings of the 27th International Conference on
+  International Conference on Machine Learning}, ICML'10, pages 807--814, USA.
+  Omnipress.
+
+\bibitem[\protect\citename{Parker \bgroup et al.\egroup
+  }2011]{parker2011english}
+Robert Parker, David Graff, Junbo Kong, Ke~Chen, and Kazuaki Maeda.
+\newblock 2011.
+\newblock English gigaword.
+\newblock {\em Linguistic Data Consortium}.
+
+\bibitem[\protect\citename{Pradhan \bgroup et al.\egroup
+  }2013]{pradhan-etal:2013:conll-2013}
+Sameer Pradhan, Alessandro Moschitti, Nianwen Xue, Hwee~Tou Ng, Anders
+  Bj{ö}rkelund, Olga Uryupina, Yuchen Zhang, and Zhi Zhong.
+\newblock 2013.
+\newblock Towards robust linguistic analysis using ontonotes.
+\newblock In {\em Proceedings of the Seventeenth Conference on Computational
+  Natural Language Learning}, pages 143--152, Sofia, Bulgaria, August.
+  Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Sanu \bgroup et al.\egroup }2017]{joseph2017embed}
+Joseph Sanu, Mingbin Xu, Hui Jiang, and Quan Liu.
+\newblock 2017.
+\newblock Word embeddings based on fixed-size ordinally forgetting encoding.
+\newblock In {\em Proceedings of the 2017 Conference on Empirical Methods in
+  Natural Language Processing}, pages 310--315. Association for Computational
+  Linguistics.
+
+\bibitem[\protect\citename{Srivastava \bgroup et al.\egroup
+  }2014]{Srivastava:2014:DSW:2627435.2670313}
+Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
+  Salakhutdinov.
+\newblock 2014.
+\newblock Dropout: A simple way to prevent neural networks from overfitting.
+\newblock {\em J. Mach. Learn. Res.}, 15(1):1929--1958, January.
+
+\bibitem[\protect\citename{Tjong Kim~Sang and
+  De~Meulder}2003]{TjongKimSang:2003:ICS:1119176.1119195}
+Erik~F. Tjong Kim~Sang and Fien De~Meulder.
+\newblock 2003.
+\newblock Introduction to the conll-2003 shared task: Language-independent
+  named entity recognition.
+\newblock In {\em Proceedings of the Seventh Conference on Natural Language
+  Learning at HLT-NAACL 2003 - Volume 4}, CONLL '03, pages 142--147,
+  Stroudsburg, PA, USA. Association for Computational Linguistics.
+
+\bibitem[\protect\citename{Xu and Jiang}2016]{xu2016fofe}
+Mingbin Xu and Hui Jiang.
+\newblock 2016.
+\newblock A fofe-based local detection approach for named entity recognition
+  and mention detection.
+\newblock {\em arXiv preprint arXiv:1611.00801}.
+
+\bibitem[\protect\citename{Xu \bgroup et al.\egroup }2016]{xu2016yorknrm}
+Mingbin Xu, Feng Wei, Sedtawut Watcharawittayakul, Yuchen Kang, and Hui Jiang.
+\newblock 2016.
+\newblock The yorknrm systems for trilingual edl tasks at tac kbp 2016.
+\newblock In {\em Proceedings of the 9th Text Analysis Conference (TAC2016)}.
+
+\bibitem[\protect\citename{Xu \bgroup et al.\egroup }2017]{xu2017local}
+Mingbin Xu, Hui Jiang, and Sedtawut Watcharawittayakul.
+\newblock 2017.
+\newblock A local detection approach for named entity recognition and mention
+  detection.
+\newblock In {\em Proceedings of the 55th Annual Meeting of the Association for
+  Computational Linguistics}. Association for Computational Linguistics
+  ({ACL}).
+
+\bibitem[\protect\citename{Zhang \bgroup et al.\egroup }2015a]{zhang2015arxiv}
+Shiliang Zhang, Hui Jiang, Mingbin Xu, Junfeng Hou, and Lirong Dai.
+\newblock 2015a.
+\newblock A fixed-size encoding method for variable-length sequences with its
+  application to neural network language models.
+\newblock {\em arXiv preprint arXiv:1505.01504.}
+
+\bibitem[\protect\citename{Zhang \bgroup et al.\egroup }2015b]{zhang2015fixed}
+Shiliang Zhang, Hui Jiang, Mingbin Xu, Junfeng Hou, and Lirong Dai.
+\newblock 2015b.
+\newblock The fixed-size ordinally-forgetting encoding method for neural
+  network language models.
+\newblock In {\em Proceedings of the 53rd Annual Meeting of the Association for
+  Computational Linguistics and the 7th International Joint Conference on
+  Natural Language Processing (Volume 2: Short Papers)}. Association for
+  Computational Linguistics ({ACL}).
+
+\end{thebibliography}
