@@ -81,7 +81,7 @@ in the knowledge base, the EDL system needs to
 cluster all NIL mentions and assign a unique ID to
 each NIL mention cluster.
 
-In this paper, we have studied a novel deep learning model for both mention detection (MD) and Entity Linking. Our methods rely on the recent fixed-size ordinally forgetting encoding (FOFE) method to fully any variable-length of text into a fixed-size representation without losing information. 
+In this paper, we have studied a novel deep learning model for both mention detection (MD) and Entity Linking. Our methods rely on the recent fixed-size ordinally forgetting encoding (FOFE) method to fully encode any variable-length of text into a fixed-size representation without losing information. 
 Experimental results in the 2017 KBP trilingual EDL track have shown that these methods have achieved the strong results in both mention detection and entity linking.
 
 \begin{figure*}[t]
@@ -102,7 +102,7 @@ Because most NLP problems involves variable-length sequences of words,
 RNNs/LSTMs are more popular than regular feedforward NNs in dealing with these problems. 
 The simple encoding method, called Fixed-size Ordinally Forgetting Encoding (FOFE), 
 originally proposed in \cite{zhang2015fixed}, nicely overcomes the limitations of deep FNNs because it 
-can uniquely encode a variable-length sequence of words into a fixed-size representation without lossing information. 
+can uniquely encode a variable-length sequence of words into a fixed-size representation without losing information. 
 
 Give a vocabulary $V$ consisting of $|V|$ distinct words, each word can be represented by a one-hot vector. 
 FOFE mimics bag-of-words (BOW) but incorporates a forgetting factor to capture positional information.
@@ -117,7 +117,7 @@ The FOFE of each partial sequence $\bm{z_t}$ from the first word to the $t$-th w
 \alpha \cdot \bm{z_{t - 1}} + \bm{e_t}, & \text{otherwise}
 \end{cases}  \label{eq_FOFE_formula}
 \end{equation}
-where the constant $\alpha$ is called forgetting factor, and it is chosen picked between $0$ and $1$ exclusively. 
+where the constant $\alpha$ is called forgetting factor, and it is picked between $0$ and $1$ exclusively. 
 Obviously, the size of $\bm{z_t}$ is $|V|$, and it is irrelevant to the length of original sequence, $T$.
 According to \cite{zhang2015fixed}, FOFE is capable of uniquely encoding any sequence of arbitrary length, serving as a fixed-size but theoretically lossless representation for any sequence.
 
@@ -180,7 +180,7 @@ knowledge base, namely Freebase in this task. For all mentions that do not match
 
 \subsection{Entity Linking Baselines}
 
-Similar to \cite{kbp2016iflytek}, our first entity linking baseline system consists of two key modules: a candidate generation module and a neural networks ranking model. The candidate generation module is a complicated rule based system, which output a list of candidates for each detected mention. A simple multilayer feedforward neural networks model is trained to assign posterior probabilities to the candidates in the list based on some hand-crafted features \cite{kbp2016iflytek}. The candidate with the highest probability is chosen as the final linking result. 
+Similar to \cite{kbp2016iflytek}, our first entity linking baseline system consists of two key modules: a candidate generation module and a neural network ranking model. The candidate generation module is a complicated rule based system, which outputs a list of candidates for each detected mention. A simple multilayer feedforward neural networks model is trained to assign posterior probabilities to the candidates in the list based on some hand-crafted features \cite{kbp2016iflytek}. The candidate with the highest probability is chosen as the final linking result. 
 
 Our second linking system simply relies only on the detected mentions from a document. For each detected mention in a document, the multiple queries are sent to two online knowledge sources \footnote{\url{www.google.com} and \url{www.wikipedia.org}} using each underlying detected mention as well as some combinations with its neighbouring entities. The top 5 search results are recorded if they match an mid in Freebase. The final linking ID is determined based on a weighted voting from the all matched results.
 
