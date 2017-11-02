@@ -50,7 +50,7 @@
 \newcommand\BibTeX{B{\sc ib}\TeX}
 
 %\title{Named Entity Recognition Using FOFE}
-\title{Use FOFE-based Deep Neural Networks for Entity Discovery and Linking}
+\title{FOFE-based Deep Neural Networks for Entity Discovery and Linking}
 
 \author{Mingbin Xu, Nargiza Nosirova, Kelvin Jiang, Feng Wei, Hui Jiang \\
 	Department of Electrical Engineering and Computer Science \\
@@ -69,7 +69,7 @@ In this paper, we have studied a novel deep learning method for both mention det
 
 \section{Introduction}
 
-In this paper, we describe the main techniques used to build our entity discovery and linking system for the KBP2017 trilingual entity discovery and linking (EDL) track. 
+In this paper, we describe the main techniques used to build our entity discovery and linking systems for the KBP2017 trilingual entity discovery and linking (EDL) track. 
 The EDL task requires to detect named
 entities of five different types (PER, LOC, ORG, GPE, FAC) 
 and their nominal mentions in the raw text
@@ -81,7 +81,7 @@ in the knowledge base, the EDL system needs to
 cluster all NIL mentions and assign a unique ID to
 each NIL mention cluster.
 
-In this paper, we have studied a novel deep learning model for both mention detection (MD) and Entity Linking. Our methods rely on the recent fixed-size ordinally forgetting encoding (FOFE) method to fully encode any variable-length of text into a fixed-size representation without losing information. 
+In this paper, we have studied a novel deep learning model for both mention detection (MD) and Entity Linking. Our methods rely on the recent fixed-size ordinally forgetting encoding (FOFE) method to fully encode any variable-length text into a fixed-size representation without losing information. 
 Experimental results in the 2017 KBP trilingual EDL track have shown that these methods have achieved the strong results in both mention detection and entity linking.
 
 \begin{figure*}[t]
@@ -95,18 +95,18 @@ Experimental results in the 2017 KBP trilingual EDL track have shown that these 
 
 In this section, we will first briefly review the FOFE technique used in our Entity Discovery and Linking (EDL) system.
 
-Feedforward neural network (FNN) is a fast and powerful computation model. 
-However, it requires to use the fixed-size inputs and 
-lacks of the ability to capture long-term dependency in sequences. 
-Because most NLP problems involves variable-length sequences of words, 
+A feed-forward neural network (FFNN) is a fast and powerful computation model. 
+However, it requires to use fixed-size inputs and 
+lacks the ability to capture long-term dependency in sequences. 
+Because most NLP problems involve variable-length sequences of words, 
 RNNs/LSTMs are more popular than regular feedforward NNs in dealing with these problems. 
 The simple encoding method, called Fixed-size Ordinally Forgetting Encoding (FOFE), 
 originally proposed in \cite{zhang2015fixed}, nicely overcomes the limitations of deep FNNs because it 
 can uniquely encode a variable-length sequence of words into a fixed-size representation without losing information. 
 
-Give a vocabulary $V$ consisting of $|V|$ distinct words, each word can be represented by a one-hot vector. 
+Given a vocabulary $V$ consisting of $|V|$ distinct words, each word can be represented by a one-hot vector. 
 FOFE mimics bag-of-words (BOW) but incorporates a forgetting factor to capture positional information.
-It encodes any sequence of variable length composed by words in $V$. 
+It encodes any variable-length sequence composed of words in $V$. 
 Let $S = {w_1, w_2, w_3, ... , w_T}$ denote a sequence of $T$ words from $V$, 
 and $\bm{e_t}$ be the one-hot vector of the $t$-th word in $S$, where $1 \leq t \leq T$.
 The FOFE of each partial sequence $\bm{z_t}$ from the first word to the $t$-th word is recursively defined as:
@@ -117,38 +117,34 @@ The FOFE of each partial sequence $\bm{z_t}$ from the first word to the $t$-th w
 \alpha \cdot \bm{z_{t - 1}} + \bm{e_t}, & \text{otherwise}
 \end{cases}  \label{eq_FOFE_formula}
 \end{equation}
-where the constant $\alpha$ is called forgetting factor, and it is picked between $0$ and $1$ exclusively. 
-Obviously, the size of $\bm{z_t}$ is $|V|$, and it is irrelevant to the length of original sequence, $T$.
+where the constant $\alpha$ is called the forgetting factor, and it is chosen between $0$ and $1$ exclusively. 
+Evidently, the size of $\bm{z_t}$ is $|V|$, and it is irrelevant to the length of the original sequence, $T$.
 According to \cite{zhang2015fixed}, FOFE is capable of uniquely encoding any sequence of arbitrary length, serving as a fixed-size but theoretically lossless representation for any sequence.
 
 \section{Entity Discovery and Mention Detection}
 
 In this work, we have used a new FOFE-based local detection approach to build our systems for 
-entity discovery and mention detection, and then we have studied how to use multi-style training and model ensemble to further improve the performance. 
+entity discovery and mention detection, and then we have studied on how to use multi-task learning and model ensemble to further improve the performance. 
 
 \subsection{FOFE-based Models for Named Entity Recognition and Mention Detection}
 
 Our systems, called  \textbf{FOFE-NER} hereafter, 
-are motivated by the way how human actually infers whether a word segment in text is an entity or mention. 
-%where  
-%the entity types of the other entities in the same sentence is not a must.
-%Particularly, the dependency between adjacent entities is fairly weak in NER problems. 
-%Whether a fragment is an entity or not, and what class it may belong to, largely depend on
-%the internal structure of the fragment itself as well as the left and right contexts  in which it appears. 
+are motivated by the way how a human actually infers whether a word segment in text is an entity or mention. 
 To a large extent, the meaning and spelling of the underlying fragment 
-are informative to distinguish named entities from the rest of the text. 
-Contexts play a very important role in NER or mention detection 
+are both informative to distinguish named entities from the rest of the text. 
+Context plays a very important role in NER or mention detection 
 when it involves multi-sense words/phrases or out-of-vocabulary (OOV) words. 
-As shown in Figure \ref{Fig:FOFE-NER-diagram}, our proposed \textbf{FOFE-NER} method will examine all possible fragments in text (up to a certain length) one by one. For each fragment, it uses the FOFE method to fully encode the underlying fragment itself, its left context and right context into some fixed-size representations, which are in turn fed to a multi-layer feedforward neural network to predict whether the current fragment is not a valid entity mention ({\it NONE}), or its correct entity type ({\it PER}, {\it LOC}, {\it ORG} and so on). This method is appealing because the FOFE codes serves as a theoretically lossless representation of the hypothesis and its full contexts and the multi-layer neural networks are used as a universal approximator to map from text to the entity labels. 
+As shown in Figure \ref{Fig:FOFE-NER-diagram}, our proposed \textbf{FOFE-NER} method examines all possible fragments in text (up to a certain length) one by one. For each fragment, it uses the FOFE method to fully encode the underlying fragment itself, its left context and right context into fixed-size representations, which are in turn fed to a multi-layer feedforward neural network to predict 
+whether the current fragment is a valid entity mention (displaying NONE in the case it is not), as well as its correct entity type. This method is appealing because the FOFE codes serve as a theoretically lossless representation of the hypothesis. Since it is full contexts, the multi-layer neural networks are used as a universal approximator to map from text to the entity labels. 
 
 In this work, we use FOFE to explore both word-level and character-level features for each fragment and its contexts.
 \textbf{FOFE-NER} generates several word-level features for each fragment hypothesis and its left and right contexts: 
 i) Bag-of-word vector of the fragment; ii) FOFE code for left context including the fragment; iii) FOFE code for left context excluding the fragment; iv) FOFE code for right context including the fragment; v) FOFE code for right context excluding the fragment.
 On top of the above word-level features, we also augment character-level features for the underlying segment hypothesis to further model its morphological structure: i) Left-to-right FOFE code of the character sequence of the underlying fragment; ii) Right-to-left FOFE code of the character sequence of the underlying fragment.
 
-Obviously, the above \textbf{FOFE-NER} model will take each sentence of words, $S = [w_1, w_2, w_3, ..., w_m]$, as input, and examine all continuous sub-sequences $[w_i, w_{i+1}, w_{i+2}, ..., w_{j}]$ up to $n$ words in $S$ for  possible entity types. All sub-sequence longer than $n$ words are considered as non-entity in this work. 
+Evidently, the above \textbf{FOFE-NER} model will take each sentence of words, $S = [w_1, w_2, w_3, ..., w_m]$, as input, and examine all continuous sub-sequences $[w_i, w_{i+1}, w_{i+2}, ..., w_{j}]$ up to $n$ words in $S$ for  possible entity types. All sub-sequences longer than $n$ words are considered as non-entity in this work. 
 
-When we train the model, based on the entity labels of all sentences in the training set, we will generate many sentence fragments up to $K$ words. These fragments fall into three categories: i) Exact-match with an entity label, e.g., the fragment  ``{\it Toronto Maple Leafs}'' in the previous example; ii) Partial-overlap with an entity label, e.g., ``{\it for the Toronto}''; iii) Disjoint with all entity label, e.g. ``{\it from space for}''.
+When we train the model, based on the entity labels of all sentences in the training set, we generate many sentence fragments up to $K$ words. These fragments fall into three categories: i) Exact-match with an entity label, e.g., the fragment  ``{\it Toronto Maple Leafs}'' in the previous example; ii) Partial-overlap with an entity label, e.g., ``{\it for the Toronto}''; iii) Disjoint from all entity labels, e.g. ``{\it from space for}''.
 For all exact-matched fragments, we generate the corresponding outputs based on the types of the matched entities in the training set. For both partial-overlap and disjoint fragments, we introduce a new output label, {\bf NONE}, to indicate that these fragments are not a valid entity. Therefore, the output nodes in the neural networks contains all entity types plus a rejection option denoted as {\bf NONE}.
 
 \begin{figure*}[t]
@@ -163,7 +159,7 @@ For all exact-matched fragments, we generate the corresponding outputs based on 
 Recently, Multi-task Learning (MTL) has been the centre of a lot of attention. The main idea of MTL lies in concurrently learning a task alongside related (auxiliary) tasks by using a shared representation. Much of the work done in MTL was initiated by \cite{Caruana:1997:ML:262868.262872}. 
 His definition of a related task is one that gives the main task a higher performance when trained together as opposed to training it on its own. He also proposes to share features and hidden modules for better performance. Such techniques have been used and confirmed in many studies \cite{Maurer:2016:BMR:2946645.3007034,Ando:2005:FLP:1046920.1194905}. The wide spectrum of approaches in the MTL literature have yielded promising results that grant further investigation. To explore this, we develop a multi-task feedforward neural network model which relies on the recent fixed-size ordinally forgetting encoding (FOFE) to conduct entity discovery and mention detection. 
 
-The character and word features used for this model are FOFE-based, similarly to the single-task model mentioned in the previous section. The multi-task model consists of a feedforward neural network with hidden Rectified linear unit (ReLU) \cite{Nair:2010:RLU:3104322.3104425} activation layers. The model makes use of multiple datasets with different named entity annotations, where each dataset is treated as a separate task. Assuming that we have access to N such tasks, a single task is randomly chosen out of the N tasks at the beginning of each epoch in order to train the neural network. The character and word features of the chosen task are fed into the shared module consisting of hidden layers, where the internal representations that arise in the hidden layers for one task may be used by other subsequent tasks. A fixed amount of training examples (mini-batch) from the chosen dataset are selected at each training step. As shown in Figure \ref{Fig:FOFE-MTL-NER-diagram}, the shared module then branches out to N private modules in order to also customize the learning of each individual task. Each private module contains an output layer that uses softmax activation, classifying the fragment by selecting the label with the highest value from the softmax output. Finally, we feed the loss of the current task backwards. Therefore, throughout the epochs, the inputs of each task get fed alternatively into the neural network. The layers are randomly initialized using a uniform distribution. Our model defines one of the tasks to be the main task (Task N in Figure \ref{Fig:FOFE-MTL-NER-diagram}); the task of which we want to improve the performance. Thus, the private module of the main task will contain a hidden layer in addition to an output layer, whereas the auxiliary private modules will simply consist of an output layer. After having chosen a task at the beginning of an epoch, the model will take each sequence of words as input from the data, and examine all subsequences in a sentence to up to n words for possible entity types. All subsequences longer than n words are considered as non-entities. 
+The character and word features used for this model are FOFE-based, similarly to the single-task model mentioned in the previous section. The multi-task model consists of a feedforward neural network with hidden Rectified linear unit (ReLU) \cite{Nair:2010:RLU:3104322.3104425} activation layers. The model makes use of multiple datasets with different named entity annotations, where each dataset is treated as a separate task. Assuming that we have access to N such tasks, a single task is randomly chosen out of the N tasks at the beginning of each epoch in order to train the neural network. The character and word features of the chosen task are fed into the shared module consisting of hidden layers, where the internal representations that arise in the hidden layers for one task may be used by other subsequent tasks. A fixed amount of training examples (mini-batch) from the chosen dataset are selected at each training step. As shown in Figure \ref{Fig:FOFE-MTL-NER-diagram}, the shared module then branches out to N private modules in order to also customize the learning of each individual task. Each private module contains an output layer that uses softmax activation, classifying the fragment by selecting the label with the highest value from the softmax output. Finally, we feed the loss of the current task backwards. Therefore, throughout the epochs, the inputs of each task get fed alternatively into the neural network. The layers are randomly initialized using a uniform distribution. Our model defines one of the tasks to be the main task (Task N in Figure \ref{Fig:FOFE-MTL-NER-diagram}); the task of which we want to improve the performance. Thus, the private module of the main task will contain a hidden layer in addition to an output layer, whereas the auxiliary private modules will simply consist of an output layer. After having chosen a task at the beginning of an epoch, the model will take each sequence of words as input from the data, and examine all subsequences in a sentence to up to n words for possible entity types. As mentioned in the previous section, all subsequences longer than $n$ words are considered as non-entities. 
 %While training the model, we generate many sentence fragments. 
 %Those fragments fall into one of those three categories: exact-match with an entity label, partial-overlap with an entity label, or disjoint. If the segment is an exact match, we output the corresponding entity type (for example "PER" for John Smith). For the two other categories, we simply output "NONE" to indicate that these fragments are not proper named entities. Thus, the output layer of the neural network displays all the entity types from the chosen task, additionally to the exclusion option denoted as "NONE". 
 
@@ -180,14 +176,14 @@ knowledge base, namely Freebase in this task. For all mentions that do not match
 
 \subsection{Entity Linking Baselines}
 
-Similar to \cite{kbp2016iflytek}, our first entity linking baseline system consists of two key modules: a candidate generation module and a neural network ranking model. The candidate generation module is a complicated rule based system, which outputs a list of candidates for each detected mention. A simple multilayer feedforward neural networks model is trained to assign posterior probabilities to the candidates in the list based on some hand-crafted features \cite{kbp2016iflytek}. The candidate with the highest probability is chosen as the final linking result. 
+Similar to \cite{kbp2016iflytek}, our first entity linking baseline system consists of two key modules: a candidate generation module and a neural network ranking model. The candidate generation module is a complicated rule based system, which outputs a list of candidates for each detected mention. A simple multilayer feedforward neural network model is trained to assign posterior probabilities to the candidates in the list based on some hand-crafted features \cite{kbp2016iflytek}. The candidate with the highest probability is chosen as the final linking result. 
 
-Our second linking system simply relies only on the detected mentions from a document. For each detected mention in a document, the multiple queries are sent to two online knowledge sources \footnote{\url{www.google.com} and \url{www.wikipedia.org}} using each underlying detected mention as well as some combinations with its neighbouring entities. The top 5 search results are recorded if they match an mid in Freebase. The final linking ID is determined based on a weighted voting from the all matched results.
+Our second linking system simply relies on the detected mentions from a document only. For each detected mention in a document, the multiple queries are sent to two online knowledge sources \footnote{\url{www.google.com} and \url{www.wikipedia.org}} using each underlying detected mention as well as some combinations with its neighbouring entities. The top 5 search results are recorded if they match an mid in Freebase. The final linking ID is determined based on a weighted voting from the all matched results.
 
 \subsection{FOFE Model for Entity Linking}
 
-Here, we have also investigated to use a novel approach for entity linking, which make use of feedforward NNs and the FOFE features \cite{zhang2015fixed} to fully encode the sentence fragment and its left/right contexts into a fixed-size
-representation, as in \cite{xu2017local}. Comparing with our baseline system in \cite{kbp2016iflytek}, this method does not use any feature engineering and totally relies on the FOFE features that are automatically extracted from text. 
+Here, we also investigate to use a novel approach for entity linking, which makes use of feedforward NNs and FOFE features \cite{zhang2015fixed} to fully encode the sentence fragment and its left/right contexts into a fixed-size
+representation, as in \cite{xu2017local}. Comparing with our baseline system in \cite{kbp2016iflytek}, this method does not use any feature engineering and completely relies on the FOFE features that are automatically extracted from text. 
 
 \begin{figure*}[h]
   \centering
@@ -196,7 +192,7 @@ representation, as in \cite{xu2017local}. Comparing with our baseline system in 
   \caption{Our Entity Linking system use FOFE features as input and a feed-forward neural network as model.}\label{FOFE-DL-fg:2}
 \end{figure*}
 
-As we know, the final linking performance heavily relies on the generated candidate list. In this
+We recognize that the final linking performance relies heavily  on the generated candidate list. In this
 work, we utilize a rule-based system, similar to \cite{kbp2016iflytek}, as our candidate generation module to generate
 candidates for each detected mention. Candidates
 are generated based on knowledge bases,
@@ -208,7 +204,7 @@ The candidate list for each detected mention contains
 the Freebase node IDs that match with the
 mention in the candidate generation process. In
 this work, we propose to use a feedforward fully connected
-NNs ranking model to assign probabilities
+NN ranking model to assign probabilities
 to all candidates in the list. The candidate
 with the highest probability is chosen as the final
 linking result. Each time, our FOFE ranking model
@@ -223,15 +219,15 @@ only if their mention strings are the same (case-insensitive).
 
 \section{Experimental Results}
 
-The trilingual EDL task is extended to to detect nominal mentions of all 5 entity types for all three languages. In our experiments, for simplicity, we just treat nominal mention types as some extra entity types and detect them along with named entities together with a single model.  
-In the following, we will report the our performance on the KBP2017  trilingual EDL track. 
+The trilingual EDL task is extended to detect nominal mentions of all 5 entity types for all three languages. In our experiments, for simplicity, we simply treat nominal mention types as some extra entity types and detect them along with named entities together with a single model.  
+In the following, we will report our performance on the KBP2017  trilingual EDL track. 
 
 \subsection{Training Data}
 
-We make use of the following data sets as our training data to learn the NER and mention detection models. 
+We make use of the following datasets as our training data to learn the NER and mention detection models. 
 
 \begin{itemize}
-	\item \textbf{Training and evaluation data in KBP2015}: In previous year's competition, 335 English documents, 313 Chinese documents and 296 Spanish documents were annotated for training and evaluation, totalling 944 documents. In this data set, all five named mention types (PER, ORG, GPE, LOC, FAC) and only one nominal mention type (PER) are labelled. 
+	\item \textbf{Training and evaluation data in KBP2015}: In the KBP 2015 competition, 335 English documents, 313 Chinese documents and 296 Spanish documents were annotated for training and evaluation, totalling 944 documents. In this data set, all five named mention types (PER, ORG, GPE, LOC, FAC) and only one nominal mention type (PER) are labelled. 
 	
 	\item \textbf{Evaluation data in KBP2016}: In this data set, all five named mention types (PER, ORG, GPE, LOC, FAC) and their nominal mention type (PER) are labelled. 
 	
@@ -270,9 +266,9 @@ We have trained 4 sets of \textbf{FOFE-NER} models \cite{xu2017local,xu2016fofe,
 They differ in terms of initial word embedding and training data, as listed in Table \ref{tbl:model-diff}. 
 Each set consists of 5 models that are cross-validated, which totals 20 models. For each model set, data is divided into 5 disjoint partitions. Each model within the same set holds out one different partition and is trained with the rest. 
 
-Final result is produced by hard voting where 6 models agree \cite{breiman1996bagging}. 
+The final result is produced by hard voting where 6 models agree \cite{breiman1996bagging}. 
 More precisely, we treat the labels as 4-element tuples of (filename, offsets, entity-type, named-or-nominal).
-Occurrences of each label are accumulated while each occurrence contributes to 1 voting score. If a label receives more than 6 votes out of 20, it is included in the final submission. As shown in Table \ref{tbl:kbp2017-EDL-modelensemble}, the model ensemble has significantly improved the entity discovery (ED) performance for all three languages, about 1.5\% gain in $F_1$ scores. 
+Occurrences of each label are accumulated while each occurrence contributes to one voting score. If a label receives more than 6 votes out of 20, it is included in the final submission. As shown in Table \ref{tbl:kbp2017-EDL-modelensemble}, the model ensemble has significantly improved the entity discovery (ED) performance for all three languages, about 1.5\% gain in $F_1$ scores. 
 
 \begin{table*}
 	\centering
@@ -326,8 +322,7 @@ ALL  & {\bf 0.611} & {\bf 0.607} & 0.565 & 0.586 & - & - \\ \hline
 
 \section{Conclusions}
 
-In this paper, we have described the techniques used for KBP2017 evaluation of Trilingual EDL Track. We have investigated a new FOFE-based local detection based approach for both entity discovery and linking. This method has relied on the recent fixed-size ordinally forgetting encoding (FOFE) method to fully encode each fragment and its left/right contexts into a fixed-size representation, and a simple feedforward neural network to reject or predict entity label for each individual fragment. 
-Our systems using this method have achieved a strong performance in the official KBP2017 trilingual EDL evaluations. 
+In this paper, we have described the techniques used for KBP2017 evaluation of Trilingual EDL Track. We have investigated a new FOFE-based local detection based approach for both entity discovery and linking. This method has relied on the recent fixed-size ordinally forgetting encoding (FOFE) method to fully encode each fragment and its left/right contexts into a fixed-size representation, and a simple feedforward neural network to reject or predict entity labels for each individual fragment. Using this method, our systems have achieved a strong performance in the official KBP2017 trilingual EDL evaluations. 
 
 \bibliography{fofe4ner}
 \bibliographystyle{acl2016}
